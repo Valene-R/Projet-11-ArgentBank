@@ -4,6 +4,10 @@ import styled from 'styled-components';
 export const FeaturesSectionStyled = styled.section`
 	display: flex;
 	flex-direction: column;
+
+	@media (min-width: 920px) {
+		flex-direction: row;
+	}
 `;
 
 // Conteneur pour chaque élément de fonctionnalité
