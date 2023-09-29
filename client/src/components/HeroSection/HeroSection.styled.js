@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import bankTreeImage from '../../img/bank-tree.webp';
 
 // Arrière-plan d'image
-export const Hero = styled.div`
+export const Root = styled.div`
 	background-image: url(${bankTreeImage});
 	background-position: 0 -50px;
 	background-size: cover;
@@ -17,7 +17,7 @@ export const Hero = styled.div`
 `;
 
 // Contenu de la section Hero
-export const HeroContent = styled.section`
+export const Content = styled.section`
 	position: relative;
 	top: 2rem;
 	width: 200px;

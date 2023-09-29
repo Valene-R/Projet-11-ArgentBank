@@ -1,11 +1,11 @@
 import React from 'react';
-import { FooterStyled, FooterText } from './styled-components-Footer';
+import { Root, Text } from './Footer.styled';
 
 const Footer = () => {
   return (
-    <FooterStyled>
-			<FooterText>Copyright 2020 Argent Bank</FooterText>
-    </FooterStyled>
+    <Root>
+			<Text>Copyright 2020 Argent Bank</Text>
+    </Root>
   );
 };
 

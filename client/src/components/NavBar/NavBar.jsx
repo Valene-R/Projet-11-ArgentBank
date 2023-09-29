@@ -1,22 +1,17 @@
 import React from 'react';
 import { ROUTES } from '../../Router/routes';
-import { Nav, NavLinkLogo, NavLinkStyled, Logo, DivSignIn } from './styled-components-NavBar';
-import LogoArgentBank from '../../img/argentBankLogo.png';
+import { Root, DivSignIn } from './NavBar.styled';
+import Logo from './Logo/Logo';
+import SignInLink from './SignInLink/SignInLink';
 
 const NavBar = () => {
   return (
-    <Nav>
-      <NavLinkLogo to={ROUTES.HOME}>
-        <Logo src={LogoArgentBank} alt="Argent Bank Logo" />
-				<h1 className="sr-only">Argent Bank</h1>
-      </NavLinkLogo>
+    <Root>
+      <Logo to={ROUTES.HOME} />
 			<DivSignIn>
-				<NavLinkStyled to={ROUTES.SIGNIN}>
-        	<i className="fa fa-user-circle"></i>
-        	Sign In
-      	</NavLinkStyled> 
+				<SignInLink to={ROUTES.SIGNIN} icon="fa fa-user-circle">Sign In</SignInLink>
 			</DivSignIn> 
-    </Nav>
+    </Root>
   );
 };
 

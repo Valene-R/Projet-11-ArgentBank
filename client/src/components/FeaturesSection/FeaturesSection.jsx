@@ -1,31 +1,26 @@
 import React from 'react';
-import { FeaturesSectionStyled, FeatureItem, FeatureIcon, FeatureItemTitle } from './styled-components-FeaturesSection';
+import { Root } from './FeaturesSection.styled';
+import Item  from './Item/Item';
 import ChatIcon from '../../img/icon-chat.png';
 import MoneyIcon from '../../img/icon-money.png';
 import SecurityIcon from '../../img/icon-security.png';
 
 const FeaturesSection = () => {
   return (
-    <FeaturesSectionStyled>
-      <FeatureItem>
-        <FeatureIcon src={ChatIcon} alt="Chat Icon" />
-        <FeatureItemTitle>You are our #1 priority</FeatureItemTitle>
+    <Root>
+      <Item icon={ChatIcon} title="You are our #1 priority">
         <p>
           Need to talk to a representative? You can get in touch through our
           24/7 chat or through a phone call in less than 5 minutes.    
         </p>
-      </FeatureItem>
-      <FeatureItem>
-        <FeatureIcon src={MoneyIcon} alt="Money Icon" />
-        <FeatureItemTitle>More savings means higher rates</FeatureItemTitle>
+      </Item>
+      <Item icon={MoneyIcon} title="More savings means higher rates">
         <p>The more you save with us, the higher your interest rate will be!</p>
-      </FeatureItem>
-      <FeatureItem>
-        <FeatureIcon src={SecurityIcon} alt="Security Icon" />
-        <FeatureItemTitle>Security you can trust</FeatureItemTitle>
+      </Item>
+      <Item icon={SecurityIcon} title="Security you can trust">
         <p>We use top of the line encryption to make sure your data and money is always safe.</p>
-      </FeatureItem>
-    </FeaturesSectionStyled>
+      </Item>
+    </Root>
   );
 };
 

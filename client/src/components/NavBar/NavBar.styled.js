@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 // Conteneur principal de la barre de navigation
-export const Nav = styled.nav`
+export const Root = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,18 +27,6 @@ export const NavLinkStyled = styled(NavLink)`
   i.fa {
     margin-right: 4px;
   }
-`;
-
-// lien du logo
-export const NavLinkLogo = styled(NavLinkStyled)`
-  display: flex;
-  align-items: center;
-`;
-
-// Image du Logo
-export const Logo = styled.img`
-  max-width: 100%;
-  width: 200px;
 `;
 
 // Conteneur de "Sign In"
