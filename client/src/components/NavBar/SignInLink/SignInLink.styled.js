@@ -8,10 +8,6 @@ export const NavLinkStyled = styled(NavLink)`
   text-decoration: none;
   margin-right: 8px;
   
-  &.active {
-    color: #42b983;
-  }
-  
   &:hover {
     text-decoration: underline;
   }
