@@ -46,3 +46,22 @@ export const Button = styled.button`
 	cursor: pointer;
 	text-decoration: underline;
 `;
+
+// Loading de chargement
+export const Loading = styled.div`
+  padding: 10px;
+  color: #fff;
+  background-color: #3498db;
+  border-radius: 5px;
+  text-align: center;
+`;
+
+// Message d'erreur
+export const Error = styled.div`
+  padding: 10px;
+  color: #fff;
+  background-color: #e74c3c;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+`;

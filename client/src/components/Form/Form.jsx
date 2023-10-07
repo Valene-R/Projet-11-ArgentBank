@@ -1,16 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Root, SignInContent, UserIcon, StyledForm, Button } from './Form.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../reducers/authSlice'; 
+import { Root, SignInContent, UserIcon, StyledForm, Button, Loading, Error } from './Form.styled';
 import Field from './Field/Field';
 import RememberMe from './RememberMe/RememberMe';
+import { useNavigate } from 'react-router-dom';
+
 
 const Form = () => {
-  // Initialise react-hook-form pour gérer les formulaires
+  // Hook Redux pour dispatcher des actions et sélectionner des valeurs du store
+  const dispatch = useDispatch();
+  // Initialise les méthodes de la bibliothèque react-hook-form
   const { register, handleSubmit } = useForm();
+  // Hook de navigation pour rediriger l'utilisateur après la connexion
+  const navigate = useNavigate();
 
-  // Fonction pour traiter les données du formulaire lors de sa soumission
-  const onSubmit = (data) => {
-    console.log(data);
+  // Utilise useSelector pour obtenir l'état de l'authentification depuis le store Redux
+  const isLoading = useSelector(state => state.auth.isLoading);
+  const error = useSelector(state => state.auth.error);
+  const token = useSelector(state => state.auth.token); // Si un token est présent, l'utilisateur est connecté
+
+  // Si un token est obtenu, redirige vers la page de profil
+  useEffect(() => {
+    if (token) {
+      navigate('/profile');
+    }
+  }, [token, navigate])
+
+  // Gère la soumission du formulaire de connexion
+  const onSubmit = async (data) => {
+    try {
+      const userData = {
+        "email": data.email,
+        "password": data.password
+      };
+      // Dispatche l'action de connexion avec les données de l'utilisateur
+      dispatch(loginUser(userData));
+    } catch (error) {
+      console.error("Une erreur s'est produite lors de la connexion :", error);
+    }
   };
 
   return (
@@ -18,9 +47,12 @@ const Form = () => {
       <SignInContent>
         <UserIcon className="fa fa-user-circle" />
         <h1>Sign In</h1>
+        {/* Affiche un loader si la connexion est en cours */}
+        {isLoading && <Loading>Loading...</Loading>}
+        {/* Affiche une erreur si la connexion a échoué */}
+        {error && <Error>{error}</Error>}
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-          {/* Le prop "register" est utilisé pour lier les champs à react-hook-form */}
-          <Field type="text" id="username" label="Username" register={register} required />
+          <Field type="text" id="email" label="Email" register={register} required />
           <Field type="password" id="password" label="Password" register={register} required />
           <RememberMe register={register} />
           <Button type="submit">Sign In</Button>
