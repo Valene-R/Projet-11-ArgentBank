@@ -1,13 +1,23 @@
 import React from 'react';
-import { NavLinkStyled } from './SignInLink.styled';
+import { NavLinkStyled, ActionButton } from './SignInLink.styled';
 
-const SignInLink = ({ to, icon, children }) => {
-	return (
-	 <NavLinkStyled to={to}>
-     <i className={icon}></i>
-     {children}
-   </NavLinkStyled>
-	);
+const SignInLink = ({ to, icon, children, onClick }) => {
+  if (to) {
+    return (
+      <NavLinkStyled to={to}>
+        <i className={icon}></i>
+        {children}
+      </NavLinkStyled>
+    );
+  } else if (onClick) {
+    return (
+      <ActionButton onClick={onClick}>
+        <i className={icon}></i>
+        {children}
+      </ActionButton>
+    );
+  }
+  return null; // Gére le cas où ni "to" ni "onClick" ne sont fournis
 };
 
 export default SignInLink;

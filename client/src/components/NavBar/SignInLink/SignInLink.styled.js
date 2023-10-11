@@ -16,3 +16,28 @@ export const NavLinkStyled = styled(NavLink)`
     margin-right: 4px;
   }
 `;
+
+// Bouton d'action
+export const ActionButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-right: 8px;
+  font-size: 16px;
+  display: flex;
+  flex-basis: min-content;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+
+  i.fa {
+    margin-right: 4px;
+  }
+
+  @media (min-width: 404px) {
+		flex-basis: unset;
+	}
+`;

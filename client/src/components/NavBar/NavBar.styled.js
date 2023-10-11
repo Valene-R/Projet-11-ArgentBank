@@ -11,5 +11,8 @@ export const Root = styled.nav`
 
 // Conteneur de "Sign In"
 export const DivSignIn = styled.div`
-	display: block;
+	display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 `;
+

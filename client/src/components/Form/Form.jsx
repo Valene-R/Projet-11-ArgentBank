@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const Form = () => {
   // Hook Redux pour dispatcher des actions et sélectionner des valeurs du store
   const dispatch = useDispatch();
-  // Initialise les méthodes de la bibliothèque react-hook-form
+  // Initialise les méthodes de react-hook-form
   const { register, handleSubmit } = useForm();
   // Hook de navigation pour rediriger l'utilisateur après la connexion
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Form = () => {
         {/* Affiche une erreur si la connexion a échoué */}
         {error && <Error>{error}</Error>}
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-          <Field type="text" id="email" label="Email" register={register} required />
+          <Field type="text" id="email" label="Username" register={register} required />
           <Field type="password" id="password" label="Password" register={register} required />
           <RememberMe register={register} />
           <Button type="submit">Sign In</Button>
