@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLinkStyled, ActionButton } from './SignInLink.styled';
+import { NavLinkStyled, ActionButton } from './signInLink.styled';
 
 const SignInLink = ({ to, icon, children, onClick }) => {
   if (to) {

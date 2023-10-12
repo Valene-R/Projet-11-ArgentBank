@@ -1,5 +1,5 @@
 import React from 'react';
-import { Root, Content, Subtitle, Text } from './HeroSection.styled';
+import { Root, Content, Subtitle, Text } from './heroSection.styled';
 
 const HeroSection = () => {
   return (

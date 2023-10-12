@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../reducers/authSlice'; 
-import { Root, SignInContent, UserIcon, StyledForm, Button, Loading, Error } from './Form.styled';
-import Field from './Field/Field';
-import RememberMe from './RememberMe/RememberMe';
+import { Root, SignInContent, UserIcon, StyledForm, Button, Loading, Error } from './form.styled';
+import Field from './field/Field';
+import RememberMe from './rememberMe/RememberMe';
 import { useNavigate } from 'react-router-dom';
 
 

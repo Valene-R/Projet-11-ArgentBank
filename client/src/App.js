@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';  
-import Router from './Router/Router';
-import { GlobalStyle } from './styles/GlobalStyle';
+import Router from './router/Router';
+import { GlobalStyle } from './styles/globalStyle';
 import { useDispatch } from 'react-redux';  
 import { fetchProfile } from './reducers/authSlice';  
 

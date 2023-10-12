@@ -1,6 +1,6 @@
 import React from 'react';
-import Account from '../Account/Account';
-import { Root } from './AccountsUser.styled';
+import Account from '../account/Account';
+import { Root } from './accountsUser.styled';
 
 const AccountsUser = () => {
 	const accounts = [

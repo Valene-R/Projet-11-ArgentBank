@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogoLink, LogoImg } from './Logo.styled';
+import { LogoLink, LogoImg } from './logo.styled';
 import LogoArgentBank from '../../../img/argentBankLogo.png';
 
 const Logo = ({ to }) => {

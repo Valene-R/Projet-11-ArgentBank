@@ -1,5 +1,5 @@
 import React from 'react';
-import { Root, Label, Input } from './Field.styled';
+import { Root, Label, Input } from './field.styled';
 
 export const Field = ({ type, id, label, register, required }) => {
   return (

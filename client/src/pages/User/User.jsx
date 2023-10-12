@@ -1,8 +1,8 @@
 import React from 'react';
-import NavBar from '../../components/NavBar/NavBar';
-import AccountsUser from '../../components/AccountsUser/AccountsUser';
-import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
+import NavBar from '../../components/navBar/NavBar';
+import AccountsUser from '../../components/accountsUser/AccountsUser';
+import Footer from '../../components/footer/Footer';
+import Header from '../../components/header/Header';
 
 const User = () => {
   return (

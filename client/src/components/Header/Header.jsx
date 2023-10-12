@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfile } from '../../reducers/authSlice'; // Importe le thunk
-import { Root, WelcomeTitle, EditButton, InvisibleHeader } from './Header.styled';
+import { Root, WelcomeTitle, EditButton, InvisibleHeader } from './header.styled';
 
 const Header = () => {
   const dispatch = useDispatch();

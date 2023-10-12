@@ -1,8 +1,8 @@
 import React from 'react';
-import { ROUTES } from '../../Router/routes';
-import { Root, DivSignIn } from './NavBar.styled';
-import Logo from './Logo/Logo';
-import SignInLink from './SignInLink/SignInLink';
+import { ROUTES } from '../../router/routes';
+import { Root, DivSignIn } from './navBar.styled';
+import Logo from './logo/Logo';
+import SignInLink from './signInLink/SignInLink';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../reducers/authSlice'; 
 import { useNavigate } from 'react-router-dom';

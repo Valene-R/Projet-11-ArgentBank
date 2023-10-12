@@ -1,5 +1,5 @@
 import React from 'react';
-import { Root, Checkbox, Label } from './RememberMe.styled';
+import { Root, Checkbox, Label } from './rememberMe.styled';
 
 const RememberMe = () => {
   return (

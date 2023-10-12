@@ -1,5 +1,5 @@
 import React from 'react';
-import { Root, Icon, Title } from './Item.styled';
+import { Root, Icon, Title } from './item.styled';
 
 const Item = ({ icon, title, children }) => {
   return (
