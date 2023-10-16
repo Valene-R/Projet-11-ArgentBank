@@ -1,14 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './reducers/authSlice';
+import rootReducer from './reducers/rootReducer';
 
 
 const store = configureStore({
-  reducer: {
-    auth: authReducer,
-  },
-  // Active les outils de développement (DevTools) uniquement en mode développement
-  devTools: process.env.NODE_ENV !== 'production',
+  reducer: rootReducer, 
+  devTools: process.env.NODE_ENV !== 'production', // Active les outils de développement (DevTools) uniquement en mode développement
 });
 
 export default store;
-

@@ -1,45 +1,59 @@
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../reducers/authSlice'; 
 import { Root, SignInContent, UserIcon, StyledForm, Button, Loading, Error } from './form.styled';
 import Field from './field/Field';
 import RememberMe from './rememberMe/RememberMe';
 import { useNavigate } from 'react-router-dom';
-
+import { loginUser } from '../../reducers/authActions'; 
 
 const Form = () => {
-  // Hook Redux pour dispatcher des actions et sélectionner des valeurs du store
+  // Utilise useDispatch pour dispatcher des actions
   const dispatch = useDispatch();
-  // Initialise les méthodes de react-hook-form
-  const { register, handleSubmit } = useForm();
-  // Hook de navigation pour rediriger l'utilisateur après la connexion
+  // Initialise react-hook-form
+  const { register, handleSubmit, setValue } = useForm();
+  // Utilise useNavigate pour la navigation
   const navigate = useNavigate();
 
-  // Utilise useSelector pour obtenir l'état de l'authentification depuis le store Redux
+  // Utilise useSelector pour accéder à l'état du store Redux
   const isLoading = useSelector(state => state.auth.isLoading);
   const error = useSelector(state => state.auth.error);
-  const token = useSelector(state => state.auth.token); // Si un token est présent, l'utilisateur est connecté
 
-  // Si un token est obtenu, redirige vers la page de profil
+  // Lors du montage du composant
   useEffect(() => {
-    if (token) {
-      navigate('/profile');
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    if (rememberedEmail) {
+      setValue('email', rememberedEmail);
+      setValue('rememberMe', true); // Coche la case "Remember me"
     }
-  }, [token, navigate])
+  }, [setValue]);
 
-  // Gère la soumission du formulaire de connexion
-  const onSubmit = async (data) => {
-    try {
-      const userData = {
-        "email": data.email,
-        "password": data.password
-      };
-      // Dispatche l'action de connexion avec les données de l'utilisateur
-      dispatch(loginUser(userData));
-    } catch (error) {
-      console.error("Une erreur s'est produite lors de la connexion :", error);
+  const onSubmit = (data, event) => {
+    event.preventDefault();
+    // Prépare les données de l'utilisateur pour la connexion
+    const userData = {
+      email: data.email,
+      password: data.password,
+      rememberMe: data.rememberMe
+    };
+    // Si "Remember Me" est coché, stocke l'email de l'utilisateur dans le localStorage
+    if (data.rememberMe) {
+      localStorage.setItem('rememberedEmail', data.email);
+    // Sinon, supprime l'email du localStorage
+    } else {
+      localStorage.removeItem('rememberedEmail');
     }
+  
+    // Dispatche l'action de connexion avec les données de l'utilisateur
+    dispatch(loginUser(userData))
+      .then(actionResult => {
+        // Vérifie si l'action de connexion a été exécutée avec succès
+        if (loginUser.fulfilled.match(actionResult)) {
+          // Après une connexion réussie, redirige vers /profile
+          navigate('/profile');
+        }
+      }
+    );
   };
 
   return (
@@ -47,9 +61,7 @@ const Form = () => {
       <SignInContent>
         <UserIcon className="fa fa-user-circle" />
         <h1>Sign In</h1>
-        {/* Affiche un loader si la connexion est en cours */}
         {isLoading && <Loading>Loading...</Loading>}
-        {/* Affiche une erreur si la connexion a échoué */}
         {error && <Error>{error}</Error>}
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <Field type="text" id="email" label="Username" register={register} required />

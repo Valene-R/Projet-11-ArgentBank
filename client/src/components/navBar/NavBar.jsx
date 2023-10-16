@@ -4,7 +4,7 @@ import { Root, DivSignIn } from './navBar.styled';
 import Logo from './logo/Logo';
 import SignInLink from './signInLink/SignInLink';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../reducers/authSlice'; 
+import { logoutUser } from '../../reducers/authActions'; 
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
