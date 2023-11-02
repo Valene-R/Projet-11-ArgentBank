@@ -1,73 +1,70 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios'; 
+import { createSlice } from '@reduxjs/toolkit';
+import { loginUser, fetchProfile, logoutUser } from '../reducers/authActions';
 
-// Thunk : gestion de la connexion utilisateur via API
-export const loginUser = createAsyncThunk(
-  'auth/loginUser', // Identifiant unique pour cette action asynchrone
-  async (userData, thunkAPI) => {
-    try {
-			// Tentative de connexion avec les données de l'utilisateur : requête POST
-      const response = await axios.post('http://localhost:3001/api/v1/user/login', userData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-			// Si la réponse n'est pas "200", rejette avec le message d'erreur
-      if (response.status !== 200) {
-        return thunkAPI.rejectWithValue(response.data.message || "Erreur de connexion.");
-      }
-
-      // Stocke le token d'authentification dans le sessionStorage
-      sessionStorage.setItem('token', response.data.body.token);
-
-			// Retourne le token pour être traité par le reducer
-      return response.data.body.token;
-
-    } catch (error) {
-			// Vérifie si erreur spécifique à un utilisateur non trouvé
-      if (error.response && error.response.data.message === "Error: User not found!") {
-        return thunkAPI.rejectWithValue("Utilisateur non trouvé !");
-      }
-			// Autres erreurs
-      return thunkAPI.rejectWithValue("Une erreur est survenue lors de la connexion.");
-    }
-  }
-);
-
-// Slice pour la gestion de l'état de l'authentification
+// État initial de l'authentification
 const authSlice = createSlice({
-  name: 'auth', // Nom du slice, utilisé comme préfixe pour les types d'action
-	// État initial pour l'authentification
+  name: 'auth',
   initialState: {
-      isLoading: false, // Indique si une requête de connexion est en cours
-      error: null, // Stocke l'erreur si la connexion échoue
-      token: null, // Stocke le token si la connexion réussit
+    isLoading: false,
+    error: null,
+    token: null,
+    profile: null,
+    userName: null,
   },
-	// Reducers pour des actions synchrones
-  reducers: {},
-	// Reducers pour les actions générées par le thunk
+  // Reducers pour des actions synchrones
+  reducers: {
+    LOGOUT_USER: (state) => {
+      state.token = null;
+      state.userName = null;
+      state.profile = null;
+    },
+    CLEAR_ERROR: (state) => {
+      state.error = null;
+    }
+  },
+  // Reducers pour des actions asynchrones (gestion des états pending, fulfilled, rejected)
   extraReducers: (builder) => {
-      builder
-				// En attente de la réponse de l'API
-        .addCase(loginUser.pending, (state) => {
-          console.log("Action loginUser.pending déclenchée");
-            state.isLoading = true; // Active l'indicateur de chargement
-            state.error = null; // Réinitialise l'erreur
-        })
-				// Connexion réussie : stocke le token
-        .addCase(loginUser.fulfilled, (state, action) => {
-          console.log("Action loginUser.fulfilled déclenchée avec payload:", action.payload);
-            state.isLoading = false;
-            state.token = action.payload;
-        })
-				// Connexion échouée : stocke l'erreur
-        .addCase(loginUser.rejected, (state, action) => {
-          console.log("Action loginUser.rejected déclenchée avec erreur:", action.payload);
-            state.isLoading = false; 
-            state.error = action.payload; // Stocke l'erreur reçue en réponse
-        });
-  }
+    builder
+      // Lors de la tentative de connexion d'un utilisateur
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true; // Active de l'indicateur de chargement
+        state.error = null; // Réinitialise les erreurs éventuelles
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false; // Désactive de l'indicateur de chargement
+        state.token = action.payload.token; // Mise à jour du token
+        state.userName = action.payload.userName; // Mise à jour du nom d'utilisateur
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false; 
+        state.error = action.payload; // Mise à jour de l'erreur
+        state.userName = null; // Réinitialise le nom d'utilisateur
+        state.token = null;
+      })
+
+      // Lors de la tentative de récupération du profil d'un utilisateur
+      .addCase(fetchProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null; // Réinitialise les erreurs éventuelles
+      })
+      .addCase(fetchProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.profile = action.payload; // Mise à jour du profil
+      })
+      .addCase(fetchProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.token = null; // Réinitialise le token
+      })
+
+      // Lors de la déconnexion d'un utilisateur
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.token = null;
+        state.userName = null;
+        state.profile = null;
+      });
+  },
 });
 
-// Exporte le reducer pour l'utiliser dans le store
+export const { LOGOUT_USER, CLEAR_ERROR } = authSlice.actions;
 export default authSlice.reducer;
