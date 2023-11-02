@@ -5,7 +5,7 @@ import { Root, SignInContent, UserIcon, StyledForm, Button, Loading, Error } fro
 import Field from './field/Field';
 import RememberMe from './rememberMe/RememberMe';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../reducers/authActions'; 
+import { loginUser, clearError } from '../../reducers/authActions'; 
 
 const Form = () => {
   // Utilise useDispatch pour dispatcher des actions
@@ -28,8 +28,12 @@ const Form = () => {
     }
   }, [setValue]);
 
-  const onSubmit = (data, event) => {
-    event.preventDefault();
+  const onInputChange = () => {
+    // Lorsque l'utilisateur commence à taper, efface l'erreur et réinitialise le formulaire
+    dispatch(clearError());
+  };
+
+  const onSubmit = (data) => {
     // Prépare les données de l'utilisateur pour la connexion
     const userData = {
       email: data.email,
@@ -64,8 +68,8 @@ const Form = () => {
         {isLoading && <Loading>Loading...</Loading>}
         {error && <Error>{error}</Error>}
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-          <Field type="text" id="email" label="Username" register={register} required />
-          <Field type="password" id="password" label="Password" register={register} required />
+          <Field type="text" id="email" label="Username" register={register} onChange={onInputChange} required />
+          <Field type="password" id="password" label="Password" register={register} onChange={onInputChange} required />
           <RememberMe register={register} />
           <Button type="submit">Sign In</Button>
         </StyledForm>

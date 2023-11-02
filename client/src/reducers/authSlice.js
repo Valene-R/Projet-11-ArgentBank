@@ -18,6 +18,9 @@ const authSlice = createSlice({
       state.userName = null;
       state.profile = null;
     },
+    CLEAR_ERROR: (state) => {
+      state.error = null;
+    }
   },
   // Reducers pour des actions asynchrones (gestion des états pending, fulfilled, rejected)
   extraReducers: (builder) => {
@@ -63,5 +66,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { LOGOUT_USER } = authSlice.actions;
+export const { LOGOUT_USER, CLEAR_ERROR } = authSlice.actions;
 export default authSlice.reducer;
