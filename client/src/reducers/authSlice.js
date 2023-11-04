@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginUser, fetchProfile, logoutUser } from '../reducers/authActions';
+import { loginUser, fetchProfile, logoutUser, updateUserProfile } from '../reducers/authActions';
 
 // État initial de l'authentification
 const authSlice = createSlice({
@@ -62,7 +62,24 @@ const authSlice = createSlice({
         state.token = null;
         state.userName = null;
         state.profile = null;
-      });
+      })
+
+      // Lors de la mise à jour du profil de l'utilisateur
+      .addCase(updateUserProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.token = action.payload.token; // Mise à jour du token
+        state.userName = action.payload.userName; // Mise à jour du nom d'utilisateur
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.userName = null; // Réinitialise le nom d'utilisateur
+        state.token = null;
+      })
   },
 });
 
