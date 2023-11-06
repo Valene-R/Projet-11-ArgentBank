@@ -68,3 +68,39 @@ export const fetchProfileApi = async () => {
     throw error;
     }
 };
+
+// API pour mettre à jour le profil de l'utilisateur
+export const updateUserApi = async (userData) => {
+  const token = getToken();
+  // Vérifie la présence du token avant de faire l'appel API
+  if (!token) {
+    throw new Error("No token available for updating the profile.");
+  }
+
+  try {
+    console.log("Mise à jour du profil avec ces données:", userData);
+    // Requête PUT
+    const response = await axios.put('http://localhost:3001/api/v1/user/profile', userData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log("Réponse de la mise à jour:", response.data);
+    // Retourne les données du profil mises à jour
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour:", error);
+    // Gère les différents types d'erreurs lors de l'appel API
+    if (error.response) {
+      // Lorsque le serveur répond avec un statut d'erreur
+      throw new Error('Error updating profile');
+    } else if (error.request) {
+      // Lorsque la requête a été faite mais aucune réponse n'a été reçue
+      throw new Error('No response received during profile update');
+    } else {
+      // Lorsque la préparation de la requête conduit à une erreur
+      throw new Error('Error setting up profile update request');
+    }
+  }
+};

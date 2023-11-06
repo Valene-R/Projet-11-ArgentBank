@@ -1,6 +1,6 @@
 import React from 'react';
 import { ROUTES } from '../../router/routes';
-import { Root, DivSignIn } from './navBar.styled';
+import { Root, DivSignIn, Span, Styled, StyledMobil } from './navBar.styled';
 import Logo from './logo/Logo';
 import SignInLink from './signInLink/SignInLink';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,23 +22,28 @@ const NavBar = () => {
     <Root>
       <Logo to={ROUTES.HOME} />
 			<DivSignIn>
-        {profile && profile.firstName ? (
-        // Si l'utilisateur est connecté, affiche son prénom et le bouton de déconnexion
+      {profile ? (
         <>
           <SignInLink to={ROUTES.USER} icon="fa fa-user-circle">
-            {profile.firstName}
+            {profile.userName || profile.firstName}
           </SignInLink>
-          <SignInLink onClick={handleLogout} icon="fas fa-sign-out-alt">
-            Sign Out
-          </SignInLink>
+          <Styled>
+            <SignInLink onClick={handleLogout} icon="fas fa-sign-out-alt">
+            {/* '&nbsp;' Caractère d'espacement */}
+              Sign&nbsp;<Span>Out</Span> 
+            </SignInLink>
+          </Styled>
         </>
       ) : (
-        // Si l'utilisateur n'est pas connecté, affiche le bouton de connexion
-        <SignInLink to={ROUTES.SIGNIN} icon="fa fa-user-circle">
-          Sign In
-        </SignInLink>
+        <>
+          <StyledMobil>
+            <SignInLink to={ROUTES.SIGNIN} icon="fa fa-user-circle">
+              Sign In
+            </SignInLink>
+          </StyledMobil>
+        </>
       )}
-			</DivSignIn> 
+    </DivSignIn> 
     </Root>
   );
 };

@@ -7,26 +7,23 @@ export const GlobalStyle = createGlobalStyle`
 		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
 		color: #2c3e50;
-		}
+	}
 		
 	body {
-		margin: 0;
+		margin: auto;
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		}
+		max-width: 1440px;
+	}
 		
-		.main {
+	main {
 		flex: 1;
 		max-width: 1440px;
-			margin: auto;
-		}
+		margin: 0;
+	}
 		
-		.bg-dark {
-		background-color: #12002b;
-		}
-		
-		.sr-only {
+	.sr-only {
 		border: 0 !important;
 		clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
 		-webkit-clip-path: inset(50%) !important;
@@ -38,5 +35,5 @@ export const GlobalStyle = createGlobalStyle`
 		position: absolute !important;
 		width: 1px !important;
 		white-space: nowrap !important; /* 3 */
-		}
+	}
 `;

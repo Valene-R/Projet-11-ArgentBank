@@ -6,7 +6,7 @@ export const NavLinkStyled = styled(NavLink)`
   font-weight: bold;
   color: #2c3e50;
   text-decoration: none;
-  margin-right: 8px;
+  display: flex;
   
   &:hover {
     text-decoration: underline;
@@ -14,6 +14,7 @@ export const NavLinkStyled = styled(NavLink)`
 
   i.fa {
     margin-right: 4px;
+    padding-top: 4px;
   }
 `;
 
@@ -24,20 +25,18 @@ export const ActionButton = styled.button`
   cursor: pointer;
   font-weight: bold;
   color: #2c3e50;
-  margin-right: 8px;
   font-size: 16px;
   display: flex;
   flex-basis: min-content;
+  padding-left: 0;
   
   &:hover {
     text-decoration: underline;
   }
+`;
 
-  i.fa {
-    margin-right: 4px;
-  }
-
-  @media (min-width: 404px) {
-		flex-basis: unset;
-	}
+export const Styled = styled.div`
+  display: flex;
+  padding-left: 10px;
+  gap: 5px;
 `;
