@@ -1,19 +1,18 @@
 import React from 'react';
-import NavBar from '../../components/navBar/NavBar';
-import Footer from '../../components/footer/Footer';
 import HeroSection from '../../components/heroSection/HeroSection';
 import FeaturesSection from '../../components/featuresSection/FeaturesSection';
+import Layout from '../../components/layout/Layout';
 
 
 const Home = () => {
   return (
     <>
-			<NavBar />
+			<Layout>
       <main>
         <HeroSection />
         <FeaturesSection />
       </main>
-      <Footer />    
+      </Layout>  
     </>
   );
 };

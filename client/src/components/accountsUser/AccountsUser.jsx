@@ -1,5 +1,5 @@
 import React from 'react';
-import Account from '../account/Account';
+import Account from './account/Account';
 import { Root } from './accountsUser.styled';
 
 const AccountsUser = () => {
