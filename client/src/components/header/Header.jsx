@@ -1,45 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProfile, updateUserProfile } from '../../reducers/authActions'; 
+import React, {  useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Root, Title, WelcomeTitle, InvisibleHeader, EditButton } from './header.styled';
-import EditUserInfo from '../editUserInfo/EditUserInfo';
-
+import FormUserEdit from '../../containers/form/userEdit/UserEdit';
 
 const Header = () => {
-  const dispatch = useDispatch();
   // Accéde aux données de l'utilisateur dans le store Redux
-  const user = useSelector(state => state.auth.profile);
+  const user = useSelector((state) => state.user);
   // État pour le mode édition
   const [isEditing, setIsEditing] = useState(false);
-  // État pour stocker une copie temporaire des données de l'utilisateur pendant l'édition
-  const [tempUser, setTempUser] = useState(null);
 
-  // Charge le profil 
-  useEffect(() => {
-    dispatch(fetchProfile());
-  }, [dispatch]
-  );
 
-  // Gére le clic sur le bouton d'édition
-  const handleEditClick = () => {
-    setTempUser({ ...user });
-    setIsEditing(true);
+ // Gère le clic sur le bouton d'édition 
+ const handleEditClick = () => {
+  setIsEditing(true);
+};
+
+  // Ferme le mode édition
+  const handleSaved = () => {
+    setIsEditing(false); 
   };
 
-  // Gére la sauvegarde après édition
-  const handleSave = (editedUser) => {
-    dispatch(updateUserProfile(editedUser));
-    setTempUser(null);
-    setIsEditing(false); // Sort du mode édition
-  };
 
-  // Annule les modifications et sort du mode édition
-  const handleCancel = () => {
-    dispatch(updateUserProfile(tempUser));  
-    setTempUser(null);
+  // Sort du mode édition
+  const handleCanceled = () => {
     setIsEditing(false);
-  };
-
+};
 
   // Rendu conditionnel basé sur le mode édition
   return (
@@ -47,13 +32,13 @@ const Header = () => {
       {isEditing ? (
         <>
           <Title>Edit User Info</Title>
-          <EditUserInfo user={user} onSave={handleSave} onCancel={handleCancel} />
+          <FormUserEdit user={user} onSaved={handleSaved} onCanceled={handleCanceled} />
         </>
       ) : (
         <>
           <WelcomeTitle>
             Welcome back<br />
-            {user?.userName || `${user?.firstName} ${user?.lastName}`}!
+            {user?.username || `${user?.firstname} ${user?.lastname}`}!
           </WelcomeTitle>
           <EditButton onClick={handleEditClick}>Edit Name</EditButton>
         </>

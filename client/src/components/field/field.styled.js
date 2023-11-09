@@ -18,3 +18,7 @@ export const Input = styled.input`
 	padding: 5px;
 	font-size: 1.2rem;
 `;
+
+export const ErrorMessage = styled.span`
+	color: red;
+`;

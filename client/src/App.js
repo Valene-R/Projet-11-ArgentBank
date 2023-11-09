@@ -1,28 +1,30 @@
-import React, { useEffect } from 'react';  
+import React, { useEffect, useState } from 'react';  
 import Router from './router/Router';
-import { GlobalStyle } from './styles/globalStyle';
-import { useDispatch } from 'react-redux';  
-import { fetchProfile } from './reducers/authActions';  
-import { getToken, removeToken, isTokenValid } from './services/tokenService';
+
+import { useDispatch } from 'react-redux';
+import { saveToken } from "./reducers/token";  
+
 
 const App = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const token = getToken();  // Utilise getToken() pour obtenir le token
+  const [isLoading, setIsLoading] = useState(true);
 
-     // Si un token est présent et toujours valide, récupère le profil
-    if (token && isTokenValid()) {  
-      dispatch(fetchProfile());
-    } else {
-      removeToken();  // Supprime le token si expiré ou non existant
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Remise dans redux du token sauvegardé dans le localStorage
+      dispatch(saveToken(token));
     }
+
+    setIsLoading(false);
   }, [dispatch]);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div>
       <Router />
-      <GlobalStyle />
     </div>
   );
 };
