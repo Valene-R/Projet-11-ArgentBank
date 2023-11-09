@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ROUTES } from "../../../router/routes";
 import { useNavigate } from "react-router-dom";
 
 import { callApiLogin } from "../../../services/api";
 import { saveToken } from "../../../reducers/token";
-import { clearError, startLoading, stopLoading } from '../../../reducers/user';
 
 import { Root, SignInContent, UserIcon, StyledForm, Button, Loading, Error } from './login.styled';
 import Field from '../../../components/field/Field';
@@ -16,19 +15,19 @@ const FormLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // Initialise le hook de formulaire pour la validation et la manipulation des données du formulaire
-  const { register, handleSubmit, formState: { errors }, clearErrors } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const [isLoading, setIsLoading] = useState(false);
   // Etat initial du message d'erreur
   const [errorMessage, setErrorMessage] = useState(null);
-
-  // Utilise useSelector pour accéder à l'état du store Redux
-  const isLoading = useSelector((state) => state.user.isLoading);
-  const userErrors = useSelector((state) => state.user.errors);
+  // État initial pour gérer les erreurs des champs de formulaire
+  const [fieldErrors, setFieldErrors] = useState({ email: null, password: null });
 
   // Gère la soumission du formulaire
   const onSubmit = async (data) => {
     const { email, password } = data;
-    dispatch(startLoading()); //  Commence le chargement
+    setIsLoading(true); // Commence le chargement avant l'appel API
+    setErrorMessage(null); // Réinitialise les erreurs avant la soumission
 
     try {
       // Effectue la demande d'appel à l'API de la route login
@@ -43,23 +42,18 @@ const FormLogin = () => {
       setErrorMessage("Invalid credentials");
 
     } finally {
-      // Arrête l'indicateur de chargement
-      dispatch(stopLoading()); 
+      // Arrête le chargement après l'appel API 
+      setIsLoading(false); 
     }
   };
 
 
   // Gère le focus sur les champs du formulaire
   const handleFocus = (fieldName) => {
-    // Efface les erreurs spécifiques du champ du store Redux et du state local
-    if (userErrors && userErrors[fieldName]) {
-      dispatch(clearError(fieldName));
-    }
-    if (errorMessage) {
-      setErrorMessage(null);
-    }
-    // Utilise clearErrors de React Hook Form
-    clearErrors(fieldName);
+    // Efface l'erreur pour le champ en cours de focus
+    setFieldErrors(prev => ({ ...prev, [fieldName]: null }));
+    // Efface l'erreur générale
+    setErrorMessage(null);
   };
 
   return (
@@ -73,12 +67,13 @@ const FormLogin = () => {
           <Field 
             type="email" 
             id="email" 
-            label="Email" 
+            label="Username" 
             register={register}
             validation={{
               required: 'Email is required'
             }}
-            errorMessage={errors.email && errors.email.message}
+            onFocus={() => handleFocus('email')}
+            errorMessage={errors.email?.message || fieldErrors.email}
           />
           <Field  
             type="password" 
@@ -89,7 +84,7 @@ const FormLogin = () => {
               required: 'Password is required'
             }}
             onFocus={() => handleFocus('password')} // Efface l'erreur pour le champ Password
-            errorMessage={errors.password && errors.password.message}
+            errorMessage={errors.password?.message || fieldErrors.password}
           />
           <RememberMe register={register} />
           <Button type="submit">Sign In</Button>

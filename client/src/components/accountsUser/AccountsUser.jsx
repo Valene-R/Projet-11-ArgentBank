@@ -10,8 +10,6 @@ const AccountsUser = () => {
 		{ id: 3, title: 'Argent Bank Credit Card (x8349)', amount: '$184.30', description: 'Current Balance' },
 	];
   
-	console.log("Accounts:", accounts);
-  
 	return (
 	  <Root>
 		{accounts.map(account => (

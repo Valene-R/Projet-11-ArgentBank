@@ -19,7 +19,7 @@ const FormUserEdit = ({ onSaved, onCanceled }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [editedUser, setEditedUser] = useState({ ...userRedux });
 
-   // Met à jour l'état édité lorsque le Redux state change
+   // Met à jour l'état édité lorsque le state change
   useEffect(() => {
     setEditedUser(prevUser => ({
       ...prevUser,

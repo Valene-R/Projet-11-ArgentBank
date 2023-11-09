@@ -16,9 +16,6 @@ export const userSlice = createSlice({
 
 		// Action pour sauvegarder les informations de l'utilisateur
     saveUserInfos: (state, action) => {
-
-      console.log(action.payload)
-      
       state.firstname = action.payload.firstname;
       state.lastname = action.payload.lastname;
       state.username = action.payload.username;
@@ -34,31 +31,9 @@ export const userSlice = createSlice({
       // Réinitialise l'état à l'état initial
       return initialState;
     },
-
-		// Action pour faire disparaître le message d'erreur
-		clearError: (state, action) => {
-      const fieldName = action.payload; // le nom du champ à effacer
-      if (fieldName) {
-				// Efface l'erreur spécifique pour le champ donné en le définissant à une valeur null
-				state.errors[fieldName] = null;
-      } else {
-        // Réinitialise les erreurs
-        state.errors = {};
-      }
-    },
-
-		 // Action pour définir l'état de chargement à vrai
-		 startLoading: (state) => {
-      state.isLoading = true;
-    },
-
-    // Action pour définir l'état de chargement à faux
-    stopLoading: (state) => {
-      state.isLoading = false;
-    },
   },
 });
 
-export const { saveUserInfos, updateUsername, logoutUser, clearError, startLoading, stopLoading } = userSlice.actions;
+export const { saveUserInfos, updateUsername, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;

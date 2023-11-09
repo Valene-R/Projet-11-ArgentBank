@@ -46,8 +46,7 @@ export const callApiProfile = async (token) => {
  * API de mise à jour du nom d'utilisateur avec le nouveau nom d'utilisateur sauvegardé
  */
 export const callApiUserUpdateUsername = async (token, username) => {
-  console.log('Token:', token );
-  console.log('Username:', username);
+  
   if (!token) {
     throw new Error("No token provided");
   }
@@ -63,14 +62,12 @@ export const callApiUserUpdateUsername = async (token, username) => {
       },
     )
     .then((response) => {
-      console.log('API Response:', response.data);
       const { userName } = response.data.body;
       return { 
         username: userName 
       };
     })
     .catch((error) => {
-      console.error('API Error:', error);
       //  Vérifie spécifiquement les erreurs d'authentification
       if (error.response && error.response.status === 401) {
         throw new Error("Unauthorized: Invalid or expired token");

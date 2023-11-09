@@ -7,6 +7,8 @@ import { saveUserInfos } from "../reducers/user";
 import { callApiProfile } from "../services/api";
 import { removeToken } from "../reducers/token";
 
+import Loader from '../components/loader/Loader';
+
 const ProtectedRoute = ({ children }) => {
 	const dispatch = useDispatch();
 
@@ -37,7 +39,7 @@ const ProtectedRoute = ({ children }) => {
     fetchApiProfile();
   }, [tokenRedux, dispatch]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
 
   return isAllowed ? children : <Navigate to={ROUTES.SIGNIN} />;
 }
