@@ -1,6 +1,6 @@
 import React from 'react';
 import { LogoLink, LogoImg } from './logo.styled';
-import LogoArgentBank from '../../../assets/img/argentBankLogo.png';
+import LogoArgentBank from '../../../assets/img/argentBankLogo.webp';
 
 const Logo = ({ to }) => {
   return (
