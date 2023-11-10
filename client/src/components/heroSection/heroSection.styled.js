@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import bankTreeImage from '../../img/bank-tree.webp';
+import bankTreeImage from '../../assets/img/bank-tree.webp';
 
 // Arrière-plan d'image
 export const Root = styled.div`
