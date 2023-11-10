@@ -1,16 +1,15 @@
 import React from 'react';
-import NavBar from '../../components/navBar/NavBar';
-import Footer from '../../components/footer/Footer';
-import Form from '../../components/form/Form';
+import Layout from '../../components/layout/Layout';
+import FormLogin from '../../containers/form/login/Login';
 
 const SignIn = () => {
 	return (
 		<>
-			<NavBar />
+			<Layout>
 			<main>
-				<Form />
+				<FormLogin />
 			</main>
-			<Footer />
+			</Layout>
 		</>
 	);
 };

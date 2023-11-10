@@ -1,20 +1,31 @@
 import React from 'react';
 import { ROUTES } from '../../router/routes';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import { Root, DivSignIn, Span, Styled, StyledMobil } from './navBar.styled';
 import Logo from './logo/Logo';
 import SignInLink from './signInLink/SignInLink';
-import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../reducers/authActions'; 
-import { useNavigate } from 'react-router-dom';
+
+import { removeToken } from '../../reducers/token'; 
+import { logoutUser } from '../../reducers/user';
+
+
 
 const NavBar = () => {
-  const profile = useSelector((state) => state.auth.profile); // Obtient les informations du profil à partir du store redux
-  const dispatch = useDispatch(); // Dispatch pour l'utilisation des actions redux
-  const navigate = useNavigate(); // Hook pour la navigation entre les pages
+  // Obtient les informations du profil à partir du store redux
+  const username = useSelector((state) => state.user.username);
+  const firstname = useSelector((state) => state.user.firstname);
+
+  // Dispatch pour l'utilisation des actions redux
+  const dispatch = useDispatch(); 
+  // Hook pour la navigation entre les pages
+  const navigate = useNavigate(); 
 
   // Gère la déconnexion de l'utilisateur
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(removeToken());
+    dispatch(logoutUser()); // Réinitialise l'état de l'utilisateur
     navigate(ROUTES.HOME);
   };
 
@@ -22,10 +33,10 @@ const NavBar = () => {
     <Root>
       <Logo to={ROUTES.HOME} />
 			<DivSignIn>
-      {profile ? (
+      {username ? (
         <>
           <SignInLink to={ROUTES.USER} icon="fa fa-user-circle">
-            {profile.userName || profile.firstName}
+            {username || firstname}
           </SignInLink>
           <Styled>
             <SignInLink onClick={handleLogout} icon="fas fa-sign-out-alt">

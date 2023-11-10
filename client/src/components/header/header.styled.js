@@ -9,7 +9,7 @@ export const Root = styled.div`
 // Titre principal
 export const WelcomeTitle = styled.h1`
   color: #FFF;
-  margin-bottom: 2rem;
+  margin-bottom: 22px;
   padding-top: 22px;
   margin-top: 0;
 `;

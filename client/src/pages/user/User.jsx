@@ -1,18 +1,17 @@
 import React from 'react';
-import NavBar from '../../components/navBar/NavBar';
 import AccountsUser from '../../components/accountsUser/AccountsUser';
-import Footer from '../../components/footer/Footer';
 import Header from '../../components/header/Header';
+import Layout from '../../components/layout/Layout';
 
 const User = () => {
   return (
     <>
-      <NavBar />
+      <Layout>
+      <Header />
       <main>
-        <Header />
         <AccountsUser />
       </main>
-      <Footer />       
+      </Layout>       
     </>
   );
 };
