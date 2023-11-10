@@ -8,7 +8,7 @@ import SecurityIcon from '../../img/icon-security.png';
 const FeaturesSection = () => {
   return (
     <Root>
-      <Item icon={ChatIcon} title="You are our #1 priority">
+      <Item icon={ChatIcon} title="You are our #1 priority"> 
         <p>
           Need to talk to a representative? You can get in touch through our
           24/7 chat or through a phone call in less than 5 minutes.    

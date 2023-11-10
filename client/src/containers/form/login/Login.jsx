@@ -14,7 +14,7 @@ import RememberMe from '../../../components/rememberMe/RememberMe';
 const FormLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // Initialise le hook de formulaire pour la validation et la manipulation des données du formulaire
+  // Initialise le hook de formulaire pour la validation et la manipulation des données 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -25,15 +25,20 @@ const FormLogin = () => {
 
   // Gère la soumission du formulaire
   const onSubmit = async (data) => {
-    const { email, password } = data;
+    const { email, password, rememberMe } = data;
     setIsLoading(true); // Commence le chargement avant l'appel API
     setErrorMessage(null); // Réinitialise les erreurs avant la soumission
 
     try {
       // Effectue la demande d'appel à l'API de la route login
       const token = await callApiLogin(email, password);
-       // Demande à sauvegarder le token dans redux
-      dispatch(saveToken(token));
+
+      // Dispatch l'action saveToken avec le token et l'état de la case à cocher "Remember me"
+      dispatch(saveToken({
+        token: token,
+        rememberMe: rememberMe // Passe la valeur de la case à cocher directement
+      }));
+
       // Redirige vers la page profile
       navigate(ROUTES.USER);
 

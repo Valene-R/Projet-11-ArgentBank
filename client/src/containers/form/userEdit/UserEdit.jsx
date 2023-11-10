@@ -29,7 +29,7 @@ const FormUserEdit = ({ onSaved, onCanceled }) => {
     
   // Gère la soumission du formulaire
   const onSubmit = async (data) => {
-     const usernameToSave = data.username
+    const usernameToSave = data.username
 
     if (!usernameToSave.trim()) {
       setErrorMessage("Username cannot be empty");
